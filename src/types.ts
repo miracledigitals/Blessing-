@@ -6,6 +6,12 @@ export interface QuizQuestion {
   cuteReaction: string[];
 }
 
+export interface PhotoMemory {
+  id: string;
+  url: string;
+  caption: string;
+}
+
 export interface CreatorSettings {
   girlfriendName: string;
   boyfriendName: string;
@@ -13,6 +19,7 @@ export interface CreatorSettings {
   customProposalTitle: string;
   customProposalSubtitle: string;
   soundEnabled: boolean;
+  photos: PhotoMemory[];
 }
 
 export interface ProposalAnswer {

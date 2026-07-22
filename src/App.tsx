@@ -17,12 +17,14 @@ import {
   RefreshCcw,
   MessageSquareHeart,
   Star,
+  Camera,
 } from 'lucide-react';
 import { HeartAnimation } from './components/HeartAnimation';
 import { EvasiveButton } from './components/EvasiveButton';
 import { CreatorPanel } from './components/CreatorPanel';
 import { RoyalDecreeCertificate } from './components/RoyalDecreeCertificate';
 import { SunflowerIcon } from './components/SunflowerIcon';
+import { PhotoGallery } from './components/PhotoGallery';
 import { playPopSound, playSuccessChime, playFanfareSound } from './utils/audio';
 import { CreatorSettings, ProposalAnswer, ServerResponseRecord } from './types';
 
@@ -34,6 +36,23 @@ const DEFAULT_SETTINGS: CreatorSettings = {
   customProposalTitle: "Can I be your king?",
   customProposalSubtitle: "And will you be my favourite person forever?",
   soundEnabled: true,
+  photos: [
+    {
+      id: "1",
+      url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+      caption: "Sunflower sunshine & happy laughter 🌻",
+    },
+    {
+      id: "2",
+      url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
+      caption: "Holding hands & sweet moments ❤️",
+    },
+    {
+      id: "3",
+      url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+      caption: "Golden hour walks together ✨",
+    },
+  ],
 };
 
 export default function App() {
@@ -57,6 +76,43 @@ export default function App() {
   const [submitStatus, setSubmitStatus] = useState<string | null>(null);
   const [finalResponseRecord, setFinalResponseRecord] = useState<ServerResponseRecord | null>(null);
   const [triggerConfetti, setTriggerConfetti] = useState<boolean>(false);
+
+  // Load saved settings from server & localStorage on initial mount
+  useEffect(() => {
+    // 1. Instant fallback from local browser storage
+    const localSettings = localStorage.getItem('king_proposal_settings');
+    if (localSettings) {
+      try {
+        setSettings(JSON.parse(localSettings));
+      } catch (e) {
+        console.error("Local settings parse error:", e);
+      }
+    }
+
+    // 2. Fetch latest settings from server so shared link recipients see custom photos & names
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.settings) {
+          setSettings(data.settings);
+          localStorage.setItem('king_proposal_settings', JSON.stringify(data.settings));
+        }
+      })
+      .catch((err) => console.log('Server settings fetch notice:', err));
+  }, []);
+
+  // Update settings state, save locally and sync to server
+  const handleUpdateSettings = (newSettings: CreatorSettings) => {
+    setSettings(newSettings);
+    localStorage.setItem('king_proposal_settings', JSON.stringify(newSettings));
+
+    // Persist on server so anyone visiting the shared URL sees the updated photos and text
+    fetch('/api/settings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newSettings),
+    }).catch((err) => console.error('Failed to sync settings to server:', err));
+  };
 
   // Love Quiz Questions
   const quizQuestions = [
@@ -332,6 +388,19 @@ export default function App() {
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
+
+              {/* Photo Memories Gallery Section */}
+              {settings.photos && settings.photos.length > 0 && (
+                <div className="pt-4 border-t border-amber-100/80">
+                  <PhotoGallery
+                    photos={settings.photos}
+                    title="Our Precious Memories 📸"
+                    subtitle="Click any photo to enlarge & heart"
+                    compact={true}
+                    onAddPhotoClick={() => setShowCreatorPanel(true)}
+                  />
+                </div>
+              )}
             </motion.div>
           )}
 
@@ -686,6 +755,19 @@ export default function App() {
                 customNote={customMessage || finalResponseRecord?.customNote}
               />
 
+              {/* Keepsake Photo Memory Album */}
+              {settings.photos && settings.photos.length > 0 && (
+                <div className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 border border-amber-200 shadow-xl space-y-4">
+                  <PhotoGallery
+                    photos={settings.photos}
+                    title="Our Keepsake Photo Album 🌻"
+                    subtitle={`Precious memories treasured by ${settings.boyfriendName} & ${settings.girlfriendName}`}
+                    compact={false}
+                    onAddPhotoClick={() => setShowCreatorPanel(true)}
+                  />
+                </div>
+              )}
+
               <div className="text-center pt-2">
                 <button
                   id="restart-journey-btn"
@@ -731,7 +813,7 @@ export default function App() {
         isOpen={showCreatorPanel}
         onClose={() => setShowCreatorPanel(false)}
         settings={settings}
-        onUpdateSettings={setSettings}
+        onUpdateSettings={handleUpdateSettings}
       />
     </div>
   );

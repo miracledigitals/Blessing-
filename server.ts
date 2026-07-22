@@ -10,7 +10,50 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 3000;
 
-app.use(express.json());
+app.use(express.json({ limit: "20mb" }));
+
+// In-memory store for application settings & photos
+interface PhotoMemory {
+  id: string;
+  url: string;
+  caption: string;
+}
+
+interface CreatorSettings {
+  girlfriendName: string;
+  boyfriendName: string;
+  recipientEmail: string;
+  customProposalTitle: string;
+  customProposalSubtitle: string;
+  soundEnabled: boolean;
+  photos: PhotoMemory[];
+}
+
+let storedSettings: CreatorSettings = {
+  girlfriendName: "Blessing",
+  boyfriendName: "a King",
+  recipientEmail: "mcmikeyofficial@gmail.com",
+  customProposalTitle: "Can I be your king?",
+  customProposalSubtitle: "And will you be my favourite person forever?",
+  soundEnabled: true,
+  photos: [
+    {
+      id: "1",
+      url: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80",
+      caption: "Sunflower sunshine & happy laughter 🌻",
+    },
+    {
+      id: "2",
+      url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=80",
+      caption: "Holding hands & sweet moments ❤️",
+    },
+    {
+      id: "3",
+      url: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80",
+      caption: "Golden hour walks together ✨",
+    },
+  ],
+};
 
 // In-memory store for proposal responses
 interface ProposalResponse {
@@ -172,6 +215,37 @@ app.post("/api/respond", async (req, res) => {
   } catch (error: any) {
     console.error("Error processing response:", error);
     res.status(500).json({ success: false, error: error.message || "Server error" });
+  }
+});
+
+// Endpoint to get creator settings
+app.get("/api/settings", (_req, res) => {
+  res.json({
+    success: true,
+    settings: storedSettings,
+  });
+});
+
+// Endpoint to update creator settings & photos permanently on server
+app.post("/api/settings", (req, res) => {
+  try {
+    const updated = req.body;
+    if (updated && typeof updated === "object") {
+      storedSettings = {
+        ...storedSettings,
+        ...updated,
+        photos: Array.isArray(updated.photos) ? updated.photos : storedSettings.photos,
+      };
+      res.json({
+        success: true,
+        message: "Settings and photos saved permanently on server!",
+        settings: storedSettings,
+      });
+    } else {
+      res.status(400).json({ success: false, error: "Invalid settings payload" });
+    }
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err?.message || "Failed to update settings" });
   }
 });
 
