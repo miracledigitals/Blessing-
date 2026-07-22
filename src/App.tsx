@@ -22,6 +22,7 @@ import { HeartAnimation } from './components/HeartAnimation';
 import { EvasiveButton } from './components/EvasiveButton';
 import { CreatorPanel } from './components/CreatorPanel';
 import { RoyalDecreeCertificate } from './components/RoyalDecreeCertificate';
+import { SunflowerIcon } from './components/SunflowerIcon';
 import { playPopSound, playSuccessChime, playFanfareSound } from './utils/audio';
 import { CreatorSettings, ProposalAnswer, ServerResponseRecord } from './types';
 
@@ -190,42 +191,52 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#FFFBFB] flex flex-col justify-between items-center p-4 md:p-8 font-sans text-slate-800 overflow-x-hidden selection:bg-red-100 selection:text-red-900">
-      {/* Decorative Artistic Background Elements */}
-      <div className="absolute top-[-50px] right-[-50px] w-96 h-96 bg-[#FFE4E6] rounded-full blur-[100px] opacity-60 pointer-events-none" />
+    <div className="relative min-h-screen bg-[#FFFBFB] flex flex-col justify-between items-center p-4 md:p-8 font-sans text-slate-800 overflow-x-hidden selection:bg-amber-100 selection:text-amber-900">
+      {/* Decorative Artistic Background Elements with Sunflower Warmth */}
+      <div className="absolute top-[-50px] right-[-50px] w-96 h-96 bg-[#FEF3C7] rounded-full blur-[100px] opacity-70 pointer-events-none" />
       <div className="absolute bottom-[-100px] left-[-100px] w-[500px] h-[500px] bg-[#FFF1F2] rounded-full blur-[120px] opacity-70 pointer-events-none" />
+      <div className="absolute top-[40%] right-[10%] w-[300px] h-[300px] bg-[#FDE68A] rounded-full blur-[110px] opacity-40 pointer-events-none" />
+      
+      {/* Subtle Background Sunflower Watermark Accents */}
+      <div className="absolute top-8 left-8 opacity-20 pointer-events-none hidden md:block rotate-[-12deg]">
+        <SunflowerIcon className="w-24 h-24" />
+      </div>
+      <div className="absolute bottom-12 right-12 opacity-20 pointer-events-none hidden md:block rotate-[15deg]">
+        <SunflowerIcon className="w-28 h-28" />
+      </div>
+
       <div className="absolute top-[20%] left-[5%] text-[140px] md:text-[180px] text-red-500 opacity-[0.03] select-none pointer-events-none font-bold font-serif leading-none">
         ROMANCE
       </div>
 
       {/* Artistic Accent Lines */}
-      <div className="hidden lg:block absolute left-12 top-1/2 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-red-200 to-transparent pointer-events-none z-10" />
-      <div className="hidden lg:block absolute right-12 top-1/2 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-red-200 to-transparent pointer-events-none z-10" />
+      <div className="hidden lg:block absolute left-12 top-1/2 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-amber-200 to-transparent pointer-events-none z-10" />
+      <div className="hidden lg:block absolute right-12 top-1/2 -translate-y-1/2 w-px h-64 bg-gradient-to-b from-transparent via-amber-200 to-transparent pointer-events-none z-10" />
 
       {/* Artistic Sidebar Text */}
       <div className="hidden xl:flex absolute right-6 top-1/2 -translate-y-1/2 flex-col items-center gap-12 pointer-events-none z-10">
-        <div className="w-px h-20 bg-red-100" />
-        <span className="rotate-90 text-[10px] font-sans uppercase tracking-[0.8em] text-gray-300 whitespace-nowrap">
-          ESTABLISHED 2026
+        <div className="w-px h-20 bg-amber-200" />
+        <span className="rotate-90 text-[10px] font-sans uppercase tracking-[0.8em] text-amber-800/40 whitespace-nowrap flex items-center gap-2">
+          ESTABLISHED 2026 🌻
         </span>
-        <div className="w-px h-20 bg-red-100" />
+        <div className="w-px h-20 bg-amber-200" />
       </div>
 
       {/* Floating Canvas Background Animation */}
       <HeartAnimation triggerBurst={triggerConfetti} />
 
       {/* Top Navigation / Progress Header */}
-      <header className="relative z-20 w-full max-w-4xl flex items-center justify-between py-3 px-6 rounded-2xl bg-white/70 backdrop-blur-md border border-red-100 shadow-sm">
+      <header className="relative z-20 w-full max-w-4xl flex items-center justify-between py-3 px-6 rounded-2xl bg-white/80 backdrop-blur-md border border-amber-100/80 shadow-sm">
         <div className="flex flex-col">
           <div className="flex items-center space-x-2">
-            <div className="w-7 h-7 rounded-full bg-red-500 flex items-center justify-center text-white shadow-sm">
-              <Crown className="w-3.5 h-3.5 fill-white/20" />
+            <div className="w-7 h-7 rounded-full bg-gradient-to-br from-amber-400 to-red-500 flex items-center justify-center text-white shadow-sm p-0.5">
+              <SunflowerIcon className="w-5 h-5 text-amber-900" />
             </div>
-            <span className="font-serif font-semibold text-sm md:text-base text-gray-900 tracking-tight">
-              Can I Be Your King?
+            <span className="font-serif font-semibold text-sm md:text-base text-gray-900 tracking-tight flex items-center gap-1.5">
+              Can I Be Your King? <SunflowerIcon className="w-4 h-4" />
             </span>
           </div>
-          <div className="h-[1px] w-20 bg-red-200 mt-1" />
+          <div className="h-[2px] w-20 bg-gradient-to-r from-amber-300 to-red-300 mt-1" />
         </div>
 
         <div className="flex items-center space-x-4">
@@ -280,20 +291,26 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -15 }}
-              className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-red-100 shadow-2xl shadow-red-100/50 text-center space-y-6"
+              className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-amber-100/90 shadow-2xl shadow-amber-100/40 text-center space-y-6 relative overflow-hidden"
             >
+              {/* Corner Sunflower Accent */}
+              <div className="absolute top-3 right-3 text-amber-500/80 pointer-events-none">
+                <SunflowerIcon className="w-8 h-8 opacity-75" />
+              </div>
+
               <div className="relative inline-block">
-                <div className="w-20 h-20 rounded-full bg-red-500 flex items-center justify-center text-white mx-auto shadow-xl shadow-red-200 ring-8 ring-red-50">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-red-500 to-rose-600 flex items-center justify-center text-white mx-auto shadow-xl shadow-red-200 ring-8 ring-red-50">
                   <Heart className="w-10 h-10 fill-white/20 animate-pulse" />
                 </div>
-                <div className="absolute -bottom-1 -right-1 bg-amber-400 text-amber-950 text-[10px] font-bold px-2 py-0.5 rounded-full border border-white">
-                  Special Letter
+                <div className="absolute -bottom-1 -right-2 bg-amber-400 text-amber-950 text-[10px] font-bold px-2 py-0.5 rounded-full border border-white flex items-center gap-1 shadow-xs">
+                  <span>Special Letter</span>
+                  <SunflowerIcon className="w-3.5 h-3.5" />
                 </div>
               </div>
 
               <div className="space-y-3">
-                <span className="text-[10px] uppercase tracking-[0.3em] font-sans font-semibold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100">
-                  For {settings.girlfriendName} 💌
+                <span className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.3em] font-sans font-semibold text-red-600 bg-amber-50/80 px-3 py-1 rounded-full border border-amber-200/80">
+                  For {settings.girlfriendName} 💌 <SunflowerIcon className="w-3.5 h-3.5" />
                 </span>
                 <h1 className="text-3xl md:text-5xl font-serif font-light text-gray-900 leading-tight">
                   A Letter From <br />
@@ -308,9 +325,9 @@ export default function App() {
                 <button
                   id="start-proposal-journey-btn"
                   onClick={handleStartSequence}
-                  className="w-full py-4 px-8 rounded-full bg-red-500 hover:bg-red-600 text-white font-sans font-bold text-base md:text-lg tracking-wider shadow-xl shadow-red-200/60 transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-3 cursor-pointer group"
+                  className="w-full py-4 px-8 rounded-full bg-gradient-to-r from-red-500 via-rose-500 to-amber-500 hover:from-red-600 hover:to-amber-600 text-white font-sans font-bold text-base md:text-lg tracking-wider shadow-xl shadow-red-200/60 transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-3 cursor-pointer group"
                 >
-                  <Sparkles className="w-5 h-5 text-yellow-200 group-hover:rotate-12 transition-transform" />
+                  <SunflowerIcon className="w-5 h-5 text-amber-200 group-hover:rotate-45 transition-transform" />
                   <span>OPEN SPECIAL LETTER</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -325,8 +342,13 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -15 }}
-              className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 md:p-10 border border-red-100 shadow-2xl shadow-red-100/50 space-y-6"
+              className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 md:p-10 border border-amber-100 shadow-2xl shadow-red-100/40 space-y-6 relative overflow-hidden"
             >
+              {/* Corner Sunflower Accent */}
+              <div className="absolute top-3 right-3 text-amber-500/80 pointer-events-none">
+                <SunflowerIcon className="w-7 h-7 opacity-75" />
+              </div>
+
               <div className="flex items-center justify-between w-full pb-2 border-b border-red-100/60">
                 <button
                   id="manifesto-back-btn"
@@ -337,14 +359,15 @@ export default function App() {
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Back</span>
                 </button>
-                <span className="text-[10px] uppercase tracking-[0.25em] font-sans font-semibold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100">
-                  My Promises To You ✨
+                <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.25em] font-sans font-semibold text-red-500 bg-amber-50/80 px-3 py-1 rounded-full border border-amber-200/80">
+                  <span>My Promises To You</span>
+                  <SunflowerIcon className="w-3.5 h-3.5" />
                 </span>
               </div>
 
               <div className="text-center space-y-2">
-                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-red-50 text-red-500 mx-auto ring-8 ring-red-50/50 shadow-sm">
-                  <Sparkles className="w-7 h-7 fill-red-500/10 text-red-500" />
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-50 text-amber-600 mx-auto ring-8 ring-amber-50/50 shadow-sm">
+                  <SunflowerIcon className="w-8 h-8" />
                 </div>
                 <h2 className="text-2xl md:text-4xl font-serif font-light text-gray-900 pt-1">
                   Why Should You Choose <span className="text-red-500 italic font-serif">Me</span>, {settings.girlfriendName}?
@@ -366,9 +389,9 @@ export default function App() {
                 ].map((item) => (
                   <div
                     key={item.num}
-                    className="p-3.5 rounded-2xl bg-red-50/40 border border-red-100/80 flex items-start space-x-3 transition-all hover:bg-red-50/80 hover:border-red-200 group"
+                    className="p-3.5 rounded-2xl bg-gradient-to-r from-red-50/40 to-amber-50/40 border border-amber-100/80 flex items-start space-x-3 transition-all hover:bg-amber-50/80 hover:border-amber-200 group"
                   >
-                    <div className="w-8 h-8 rounded-full bg-red-500 text-white font-serif font-bold text-xs flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-500 to-amber-500 text-white font-serif font-bold text-xs flex items-center justify-center shrink-0 shadow-xs group-hover:scale-105 transition-transform">
                       {item.num}
                     </div>
                     <div className="flex-1 text-left pt-0.5">
@@ -391,7 +414,7 @@ export default function App() {
                   }}
                   className="w-full py-4 px-8 rounded-full bg-red-500 hover:bg-red-600 text-white font-sans font-bold text-sm md:text-base tracking-wider shadow-xl shadow-red-200/60 transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-3 cursor-pointer group"
                 >
-                  <Sparkles className="w-5 h-5 text-yellow-200 group-hover:rotate-12 transition-transform" />
+                  <SunflowerIcon className="w-5 h-5 text-amber-200 group-hover:rotate-12 transition-transform" />
                   <span>CONTINUE TO CUTE QUIZ</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -406,8 +429,12 @@ export default function App() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 md:p-10 border border-red-100 shadow-2xl shadow-red-100/50 space-y-6"
+              className="bg-white/90 backdrop-blur-xl rounded-3xl p-8 md:p-10 border border-amber-100 shadow-2xl shadow-red-100/40 space-y-6 relative overflow-hidden"
             >
+              <div className="absolute top-3 right-3 text-amber-500/80 pointer-events-none">
+                <SunflowerIcon className="w-6 h-6 opacity-75" />
+              </div>
+
               {/* Progress Indicator */}
               <div className="flex items-center justify-between text-xs font-semibold text-red-500 uppercase tracking-widest border-b border-red-100 pb-3">
                 <button
@@ -420,8 +447,8 @@ export default function App() {
                   <span>Back</span>
                 </button>
 
-                <div className="flex items-center space-x-1.5">
-                  <Star className="w-4 h-4 fill-red-500 text-red-500" />
+                <div className="flex items-center space-x-1.5 text-amber-600">
+                  <SunflowerIcon className="w-4 h-4" />
                   <span>CUTE QUIZ</span>
                 </div>
 
@@ -448,12 +475,16 @@ export default function App() {
                       }
                       className={`w-full py-4 px-6 text-left rounded-2xl font-sans font-medium text-sm md:text-base border transition-all flex items-center justify-between group cursor-pointer shadow-xs hover:shadow-md ${
                         isPreviouslySelected
-                          ? 'bg-red-100/90 border-red-400 text-red-900 font-semibold ring-2 ring-red-300'
-                          : 'bg-red-50/50 hover:bg-red-100/80 text-gray-800 border-red-100 hover:border-red-300'
+                          ? 'bg-amber-100/90 border-amber-400 text-amber-950 font-semibold ring-2 ring-amber-300'
+                          : 'bg-red-50/50 hover:bg-amber-50/80 text-gray-800 border-red-100 hover:border-amber-200'
                       }`}
                     >
                       <span>{option}</span>
-                      <Heart className={`w-4 h-4 ${isPreviouslySelected ? 'text-red-600 fill-red-500' : 'text-red-400 group-hover:text-red-600 group-hover:scale-110'} transition-transform shrink-0 ml-2`} />
+                      {isPreviouslySelected ? (
+                        <SunflowerIcon className="w-4 h-4 shrink-0 ml-2 animate-bounce" />
+                      ) : (
+                        <Heart className="w-4 h-4 text-red-400 group-hover:text-red-600 group-hover:scale-110 transition-transform shrink-0 ml-2" />
+                      )}
                     </button>
                   );
                 })}
@@ -468,9 +499,13 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: -20 }}
-              className="bg-white/95 backdrop-blur-2xl rounded-3xl p-8 md:p-12 border border-red-200 shadow-2xl shadow-red-200/40 text-center space-y-8 relative overflow-hidden"
+              className="bg-white/95 backdrop-blur-2xl rounded-3xl p-8 md:p-12 border border-amber-200 shadow-2xl shadow-red-200/40 text-center space-y-8 relative overflow-hidden"
             >
-              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-red-400 via-rose-500 to-red-400" />
+              <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-amber-400 via-rose-500 to-amber-400" />
+
+              <div className="absolute top-4 right-4 text-amber-500/80 pointer-events-none">
+                <SunflowerIcon className="w-8 h-8 opacity-80" />
+              </div>
 
               <div className="flex items-center justify-start w-full">
                 <button
@@ -484,18 +519,18 @@ export default function App() {
                 </button>
               </div>
 
-              {/* Artistic Main Heart Visual */}
+              {/* Artistic Main Heart & Sunflower Visual */}
               <div className="relative inline-block mt-2">
-                <div className="w-20 h-20 rounded-full bg-red-50 flex items-center justify-center mx-auto ring-8 ring-red-50/50">
-                  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.03L12 21.35Z" fill="#EF4444"/>
-                  </svg>
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-100 to-red-100 flex items-center justify-center mx-auto ring-8 ring-amber-50/50 shadow-inner">
+                  <SunflowerIcon className="w-12 h-12" />
                 </div>
               </div>
 
               <div className="space-y-4">
-                <h2 className="text-gray-400 font-sans text-xs uppercase tracking-[0.3em]">
-                  The heart wants what it wants
+                <h2 className="text-amber-600/90 font-sans text-xs uppercase tracking-[0.3em] flex items-center justify-center gap-1.5">
+                  <SunflowerIcon className="w-3.5 h-3.5" />
+                  <span>The heart wants what it wants</span>
+                  <SunflowerIcon className="w-3.5 h-3.5" />
                 </h2>
 
                 <h1 className="text-4xl md:text-7xl text-gray-900 leading-[0.95] font-serif font-light tracking-tight">
@@ -516,10 +551,10 @@ export default function App() {
                   onClick={handleMainProposalYes}
                   className="group relative w-full sm:w-auto"
                 >
-                  <div className="absolute -inset-2 bg-red-200 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="relative px-10 py-5 bg-red-500 hover:bg-red-600 text-white font-sans font-bold text-lg rounded-full tracking-widest shadow-xl shadow-red-200/60 transition-all transform group-hover:scale-105 flex items-center justify-center space-x-3 cursor-pointer">
-                    <Heart className="w-5 h-5 fill-white text-white group-hover:scale-125 transition-transform" />
-                    <span>YES, ALWAYS! 💖</span>
+                  <div className="absolute -inset-2 bg-gradient-to-r from-amber-300 to-red-300 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="relative px-10 py-5 bg-gradient-to-r from-red-500 via-rose-500 to-amber-500 hover:from-red-600 hover:to-amber-600 text-white font-sans font-bold text-lg rounded-full tracking-widest shadow-xl shadow-red-200/60 transition-all transform group-hover:scale-105 flex items-center justify-center space-x-3 cursor-pointer">
+                    <SunflowerIcon className="w-6 h-6 text-amber-200 group-hover:scale-125 transition-transform" />
+                    <span>YES, ALWAYS! 🌻💖</span>
                   </div>
                 </button>
 
@@ -540,8 +575,12 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: -15 }}
-              className="bg-white/95 backdrop-blur-2xl rounded-3xl p-8 md:p-10 border border-red-100 shadow-2xl shadow-red-100/50 space-y-6"
+              className="bg-white/95 backdrop-blur-2xl rounded-3xl p-8 md:p-10 border border-amber-100 shadow-2xl shadow-red-100/40 space-y-6 relative overflow-hidden"
             >
+              <div className="absolute top-3 right-3 text-amber-500/80 pointer-events-none">
+                <SunflowerIcon className="w-7 h-7 opacity-75" />
+              </div>
+
               <div className="flex items-center justify-start w-full">
                 <button
                   id="note-back-btn"
@@ -554,11 +593,11 @@ export default function App() {
                 </button>
               </div>
               <div className="text-center space-y-2">
-                <div className="w-14 h-14 rounded-full bg-red-50 text-red-500 flex items-center justify-center mx-auto ring-4 ring-red-50/50">
-                  <MessageSquareHeart className="w-7 h-7" />
+                <div className="w-14 h-14 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center mx-auto ring-4 ring-amber-50/50">
+                  <SunflowerIcon className="w-8 h-8" />
                 </div>
                 <h2 className="text-3xl font-serif font-light text-gray-900">
-                  SHE SAID <span className="text-red-500 italic font-serif">YES!</span> 🎉
+                  SHE SAID <span className="text-red-500 italic font-serif">YES!</span> 🎉 🌻
                 </h2>
                 <p className="text-xs md:text-sm text-gray-500 font-sans">
                   Choose a title for {settings.boyfriendName} and leave a personal note before notifying him!
