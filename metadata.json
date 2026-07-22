@@ -1,0 +1,6 @@
+{
+  "name": "Can I Be Your King - Romantic Proposal",
+  "description": "An interactive, cute sequence of questions culminating in 'Can I be your king?' proposal with celebratory heart animations and real-time email notifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
