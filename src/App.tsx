@@ -31,7 +31,7 @@ const DEFAULT_SETTINGS: CreatorSettings = {
   boyfriendName: "a King",
   recipientEmail: "mcmikeyofficial@gmail.com",
   customProposalTitle: "Can I be your king?",
-  customProposalSubtitle: "And will you be my girlfriend and my favorite person forever?",
+  customProposalSubtitle: "And will you be my favourite person forever?",
   soundEnabled: true,
 };
 
