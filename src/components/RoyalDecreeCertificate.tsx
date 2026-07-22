@@ -64,7 +64,7 @@ export const RoyalDecreeCertificate: React.FC<RoyalDecreeCertificateProps> = ({
             <span>{boyfriendName}</span>
           </div>
           <p className="text-xs text-red-600 font-semibold tracking-wide">
-            Are officially King & Queen in Love! 👑💖
+            {girlfriendName} is officially crowned My Queen in Love! 👑💖
           </p>
         </div>
 

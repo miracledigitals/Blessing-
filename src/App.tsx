@@ -10,6 +10,7 @@ import {
   Settings,
   CheckCircle2,
   ArrowRight,
+  ArrowLeft,
   Gift,
   Smile,
   ShieldCheck,
@@ -26,11 +27,11 @@ import { CreatorSettings, ProposalAnswer, ServerResponseRecord } from './types';
 
 // Default initial settings
 const DEFAULT_SETTINGS: CreatorSettings = {
-  girlfriendName: "My Queen",
-  boyfriendName: "Your King",
+  girlfriendName: "Blessing",
+  boyfriendName: "a King",
   recipientEmail: "mcmikeyofficial@gmail.com",
   customProposalTitle: "Can I be your king?",
-  customProposalSubtitle: "And will you be my girlfriend, my queen, and my favorite person forever?",
+  customProposalSubtitle: "And will you be my girlfriend and my favorite person forever?",
   soundEnabled: true,
 };
 
@@ -77,13 +78,13 @@ export default function App() {
       reaction: "Spot on! Your smile makes everything 100X better! ✨",
     },
     {
-      question: "Question 3: If we were ruling our own royal kingdom together, what would be our #1 decree?",
+      question: "Question 3: If we were planning our dream life together, what would be our #1 rule?",
       options: [
         "Mandatory 10-second hugs daily 🤗",
         "Unlimited snacks & cuddle sessions 🍫",
         "Never go to sleep upset! 🛋️",
       ],
-      reaction: "The royal realm hereby approves this law! 📜✨",
+      reaction: "This hereby becomes our official law! 📜✨",
     },
   ];
 
@@ -102,12 +103,39 @@ export default function App() {
 
   const handleQuizAnswer = (questionText: string, optionText: string) => {
     triggerSound('pop');
-    setAnswers((prev) => [...prev, { question: questionText, answer: optionText }]);
+    setAnswers((prev) => {
+      const updated = [...prev];
+      updated[quizIndex] = { question: questionText, answer: optionText };
+      return updated;
+    });
 
     if (quizIndex < quizQuestions.length - 1) {
       setQuizIndex((prev) => prev + 1);
     } else {
       // Transition to Main Proposal
+      setCurrentStep(3);
+    }
+  };
+
+  const handleGoBack = () => {
+    triggerSound('pop');
+    if (currentStep === 1) {
+      // Back from Manifesto to Welcome
+      setCurrentStep(0);
+    } else if (currentStep === 2) {
+      // Back in Quiz Questions
+      if (quizIndex > 0) {
+        setQuizIndex((prev) => prev - 1);
+      } else {
+        // From Question 1 back to Manifesto
+        setCurrentStep(1);
+      }
+    } else if (currentStep === 3) {
+      // From Main Proposal back to Question 3
+      setQuizIndex(quizQuestions.length - 1);
+      setCurrentStep(2);
+    } else if (currentStep === 4) {
+      // From Note/Confirmation back to Main Proposal
       setCurrentStep(3);
     }
   };
@@ -245,7 +273,7 @@ export default function App() {
       {/* Main Interactive Stage Container */}
       <main className="relative z-10 w-full max-w-xl mx-auto my-auto py-8">
         <AnimatePresence mode="wait">
-          {/* STEP 0: Welcome Royal Invitation */}
+          {/* STEP 0: Welcome Special Invitation */}
           {currentStep === 0 && (
             <motion.div
               key="step0"
@@ -256,10 +284,10 @@ export default function App() {
             >
               <div className="relative inline-block">
                 <div className="w-20 h-20 rounded-full bg-red-500 flex items-center justify-center text-white mx-auto shadow-xl shadow-red-200 ring-8 ring-red-50">
-                  <Crown className="w-10 h-10 fill-white/20 animate-pulse" />
+                  <Heart className="w-10 h-10 fill-white/20 animate-pulse" />
                 </div>
                 <div className="absolute -bottom-1 -right-1 bg-amber-400 text-amber-950 text-[10px] font-bold px-2 py-0.5 rounded-full border border-white">
-                  Royal Letter
+                  Special Letter
                 </div>
               </div>
 
@@ -272,7 +300,7 @@ export default function App() {
                   <span className="text-red-500 italic font-serif">{settings.boyfriendName}</span>
                 </h1>
                 <p className="text-sm md:text-base text-gray-500 font-sans leading-relaxed max-w-md mx-auto opacity-90">
-                  I prepared a special royal sequence just for you. Answer a few cute questions to reveal what my heart wants to ask...
+                  I prepared a special sequence just for you, {settings.girlfriendName}. Answer a few cute questions to reveal what my heart wants to ask...
                 </p>
               </div>
 
@@ -283,14 +311,14 @@ export default function App() {
                   className="w-full py-4 px-8 rounded-full bg-red-500 hover:bg-red-600 text-white font-sans font-bold text-base md:text-lg tracking-wider shadow-xl shadow-red-200/60 transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-3 cursor-pointer group"
                 >
                   <Sparkles className="w-5 h-5 text-yellow-200 group-hover:rotate-12 transition-transform" />
-                  <span>OPEN ROYAL LETTER</span>
+                  <span>OPEN SPECIAL LETTER</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
             </motion.div>
           )}
 
-          {/* STEP 1: WHY SHOULD I BE YOUR KING? MANIFESTO PAGE */}
+          {/* STEP 1: WHY SHOULD YOU CHOOSE ME? MANIFESTO PAGE */}
           {currentStep === 1 && (
             <motion.div
               key="step1-manifesto"
@@ -299,15 +327,27 @@ export default function App() {
               exit={{ opacity: 0, scale: 0.95, y: -15 }}
               className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 md:p-10 border border-red-100 shadow-2xl shadow-red-100/50 space-y-6"
             >
+              <div className="flex items-center justify-between w-full pb-2 border-b border-red-100/60">
+                <button
+                  id="manifesto-back-btn"
+                  type="button"
+                  onClick={handleGoBack}
+                  className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-sans font-semibold transition-all cursor-pointer hover:-translate-x-0.5"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Back</span>
+                </button>
+                <span className="text-[10px] uppercase tracking-[0.25em] font-sans font-semibold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100">
+                  My Promises To You ✨
+                </span>
+              </div>
+
               <div className="text-center space-y-2">
                 <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-red-50 text-red-500 mx-auto ring-8 ring-red-50/50 shadow-sm">
-                  <Crown className="w-7 h-7 fill-red-500/10" />
+                  <Sparkles className="w-7 h-7 fill-red-500/10 text-red-500" />
                 </div>
-                <span className="block text-[10px] uppercase tracking-[0.3em] font-sans font-semibold text-red-500 bg-red-50 px-3 py-1 rounded-full border border-red-100 max-w-fit mx-auto">
-                  Royal Manifesto 👑
-                </span>
                 <h2 className="text-2xl md:text-4xl font-serif font-light text-gray-900 pt-1">
-                  Why Should I Be Your <span className="text-red-500 italic font-serif">King</span>?
+                  Why Should You Choose <span className="text-red-500 italic font-serif">Me</span>, {settings.girlfriendName}?
                 </h2>
                 <p className="text-xs md:text-sm text-gray-500 font-sans max-w-md mx-auto">
                   Here are 6 solemn pledges straight from my heart:
@@ -320,7 +360,7 @@ export default function App() {
                   { num: "01", text: "I will care for you as the Lord mandates", icon: "🙏" },
                   { num: "02", text: "I will buy you all the shawarma you will ever want", icon: "🌯" },
                   { num: "03", text: "I won't stress you.", icon: "😌" },
-                  { num: "04", text: "I will be your number 1 Hype King", icon: "👑" },
+                  { num: "04", text: "I will be your number 1 Hype Man", icon: "💖" },
                   { num: "05", text: "We will become theology Buddies", icon: "📖" },
                   { num: "06", text: "I won't be boring.", icon: "✨" },
                 ].map((item) => (
@@ -370,10 +410,21 @@ export default function App() {
             >
               {/* Progress Indicator */}
               <div className="flex items-center justify-between text-xs font-semibold text-red-500 uppercase tracking-widest border-b border-red-100 pb-3">
+                <button
+                  id="quiz-back-btn"
+                  type="button"
+                  onClick={handleGoBack}
+                  className="inline-flex items-center space-x-1 px-3 py-1 rounded-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-sans font-semibold transition-all cursor-pointer normal-case tracking-normal hover:-translate-x-0.5"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Back</span>
+                </button>
+
                 <div className="flex items-center space-x-1.5">
                   <Star className="w-4 h-4 fill-red-500 text-red-500" />
-                  <span>CUTE QUIZ STEP {quizIndex + 1} OF {quizQuestions.length}</span>
+                  <span>CUTE QUIZ</span>
                 </div>
+
                 <span>QUESTION {quizIndex + 1}/{quizQuestions.length}</span>
               </div>
 
@@ -386,19 +437,26 @@ export default function App() {
 
               {/* Options Grid */}
               <div className="space-y-3 pt-2">
-                {quizQuestions[quizIndex].options.map((option, idx) => (
-                  <button
-                    id={`quiz-option-${idx}-btn`}
-                    key={idx}
-                    onClick={() =>
-                      handleQuizAnswer(quizQuestions[quizIndex].question, option)
-                    }
-                    className="w-full py-4 px-6 text-left rounded-2xl bg-red-50/50 hover:bg-red-100/80 text-gray-800 font-sans font-medium text-sm md:text-base border border-red-100 hover:border-red-300 transition-all flex items-center justify-between group cursor-pointer shadow-xs hover:shadow-md"
-                  >
-                    <span>{option}</span>
-                    <Heart className="w-4 h-4 text-red-400 group-hover:text-red-600 group-hover:scale-110 transition-transform shrink-0 ml-2" />
-                  </button>
-                ))}
+                {quizQuestions[quizIndex].options.map((option, idx) => {
+                  const isPreviouslySelected = answers[quizIndex]?.answer === option;
+                  return (
+                    <button
+                      id={`quiz-option-${idx}-btn`}
+                      key={idx}
+                      onClick={() =>
+                        handleQuizAnswer(quizQuestions[quizIndex].question, option)
+                      }
+                      className={`w-full py-4 px-6 text-left rounded-2xl font-sans font-medium text-sm md:text-base border transition-all flex items-center justify-between group cursor-pointer shadow-xs hover:shadow-md ${
+                        isPreviouslySelected
+                          ? 'bg-red-100/90 border-red-400 text-red-900 font-semibold ring-2 ring-red-300'
+                          : 'bg-red-50/50 hover:bg-red-100/80 text-gray-800 border-red-100 hover:border-red-300'
+                      }`}
+                    >
+                      <span>{option}</span>
+                      <Heart className={`w-4 h-4 ${isPreviouslySelected ? 'text-red-600 fill-red-500' : 'text-red-400 group-hover:text-red-600 group-hover:scale-110'} transition-transform shrink-0 ml-2`} />
+                    </button>
+                  );
+                })}
               </div>
             </motion.div>
           )}
@@ -413,6 +471,18 @@ export default function App() {
               className="bg-white/95 backdrop-blur-2xl rounded-3xl p-8 md:p-12 border border-red-200 shadow-2xl shadow-red-200/40 text-center space-y-8 relative overflow-hidden"
             >
               <div className="absolute top-0 inset-x-0 h-1.5 bg-gradient-to-r from-red-400 via-rose-500 to-red-400" />
+
+              <div className="flex items-center justify-start w-full">
+                <button
+                  id="proposal-back-btn"
+                  type="button"
+                  onClick={handleGoBack}
+                  className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-sans font-semibold transition-all cursor-pointer hover:-translate-x-0.5"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Back to Questions</span>
+                </button>
+              </div>
 
               {/* Artistic Main Heart Visual */}
               <div className="relative inline-block mt-2">
@@ -449,7 +519,7 @@ export default function App() {
                   <div className="absolute -inset-2 bg-red-200 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="relative px-10 py-5 bg-red-500 hover:bg-red-600 text-white font-sans font-bold text-lg rounded-full tracking-widest shadow-xl shadow-red-200/60 transition-all transform group-hover:scale-105 flex items-center justify-center space-x-3 cursor-pointer">
                     <Heart className="w-5 h-5 fill-white text-white group-hover:scale-125 transition-transform" />
-                    <span>YES, ALWAYS! 👑💖</span>
+                    <span>YES, ALWAYS! 💖</span>
                   </div>
                 </button>
 
@@ -472,6 +542,17 @@ export default function App() {
               exit={{ opacity: 0, scale: 0.95, y: -15 }}
               className="bg-white/95 backdrop-blur-2xl rounded-3xl p-8 md:p-10 border border-red-100 shadow-2xl shadow-red-100/50 space-y-6"
             >
+              <div className="flex items-center justify-start w-full">
+                <button
+                  id="note-back-btn"
+                  type="button"
+                  onClick={handleGoBack}
+                  className="inline-flex items-center space-x-1 px-3 py-1.5 rounded-full bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-sans font-semibold transition-all cursor-pointer hover:-translate-x-0.5"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Back</span>
+                </button>
+              </div>
               <div className="text-center space-y-2">
                 <div className="w-14 h-14 rounded-full bg-red-50 text-red-500 flex items-center justify-center mx-auto ring-4 ring-red-50/50">
                   <MessageSquareHeart className="w-7 h-7" />
@@ -544,7 +625,7 @@ export default function App() {
                   <span>
                     {isSubmitting
                       ? "Dispatching Email Alert..."
-                      : `SEAL & SEND ROYAL DECREE`}
+                      : `SEAL & SEND MY RESPONSE`}
                   </span>
                 </button>
               </form>

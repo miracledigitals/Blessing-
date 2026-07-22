@@ -139,7 +139,7 @@ export const CreatorPanel: React.FC<CreatorPanelProps> = ({
                 <div className="space-y-4">
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-                      Her Name / Nickname (Your Queen)
+                      Her Name / Nickname (e.g. Blessing)
                     </label>
                     <input
                       type="text"
@@ -152,13 +152,13 @@ export const CreatorPanel: React.FC<CreatorPanelProps> = ({
 
                   <div>
                     <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-                      Your Name / Title (The King)
+                      Your Name / Title (e.g. a King)
                     </label>
                     <input
                       type="text"
                       value={settings.boyfriendName}
                       onChange={(e) => onUpdateSettings({ ...settings, boyfriendName: e.target.value })}
-                      placeholder="e.g. Your King, Michael, Honey"
+                      placeholder="e.g. a King, Michael, Honey"
                       className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 text-slate-800 text-sm outline-none transition-all"
                     />
                   </div>
