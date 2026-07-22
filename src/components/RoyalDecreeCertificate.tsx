@@ -19,7 +19,7 @@ export const RoyalDecreeCertificate: React.FC<RoyalDecreeCertificateProps> = ({
   const [copied, setCopied] = React.useState(false);
 
   const handleCopyShare = () => {
-    const text = `👑 OFFICIAL ROYAL DECREE 💖 🌻\n${girlfriendName} said YES to ${boyfriendName}! "Can I be your king?" proposal accepted on ${new Date(timestamp).toLocaleDateString()}! ✨❤️🌻`;
+    const text = `👑 OFFICIAL CERTIFICATE OF ROYAL APPOINTMENT 💖 🌻\nQueen ${girlfriendName} has officially APPROVED the application of ${boyfriendName} to serve as King of Her Heart! Application accepted on ${new Date(timestamp).toLocaleDateString()}! ✨👑🌻`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 3000);
@@ -51,30 +51,34 @@ export const RoyalDecreeCertificate: React.FC<RoyalDecreeCertificateProps> = ({
 
       <div className="space-y-1 mb-6 font-sans">
         <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-[0.3em] text-red-600 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
-          <span>Official Royal Decree of Love</span>
+          <span>Official Certificate of Appointment</span>
           <SunflowerIcon className="w-3.5 h-3.5" />
         </span>
         <h2 className="text-3xl md:text-4xl font-serif font-light text-gray-900 pt-2">
-          Forever & <span className="text-red-500 italic font-serif">Always</span>
+          Royal Decree of <span className="text-red-500 italic font-serif">Kinghood</span>
         </h2>
         <div className="w-20 h-0.5 bg-gradient-to-r from-amber-300 via-red-300 to-amber-300 mx-auto mt-2" />
       </div>
 
       {/* Certificate Body */}
       <div className="bg-gradient-to-b from-amber-50/40 to-red-50/30 rounded-2xl p-6 border border-amber-200/80 shadow-inner space-y-4 text-slate-700 font-sans">
+        <div className="text-xs font-mono text-amber-800 bg-amber-100/60 py-1 px-3 rounded-full inline-block border border-amber-200">
+          REGISTRATION REF: ROYAL-KING-APP-2026
+        </div>
+
         <p className="text-sm md:text-base leading-relaxed">
-          Be it known throughout the realm that on this day,{' '}
+          Be it proclaimed across the kingdom that on this day,{' '}
           <strong className="text-red-600 font-bold">{new Date(timestamp).toLocaleDateString()}</strong>:
         </p>
 
-        <div className="py-4 px-4 bg-white/90 rounded-xl border border-amber-200 text-center space-y-1 shadow-xs">
+        <div className="py-4 px-4 bg-white/90 rounded-xl border border-amber-200 text-center space-y-2 shadow-xs">
           <div className="text-xl md:text-2xl font-serif font-normal text-gray-900 flex items-center justify-center space-x-2">
-            <span>{girlfriendName}</span>
-            <Heart className="w-5 h-5 text-red-500 fill-red-500 animate-pulse" />
-            <span>{boyfriendName}</span>
+            <span>Queen {girlfriendName}</span>
+            <Crown className="w-5 h-5 text-amber-500 fill-amber-400" />
+            <span>King {boyfriendName}</span>
           </div>
-          <p className="text-xs text-red-600 font-semibold tracking-wide flex items-center justify-center gap-1">
-            <span>{girlfriendName} is officially crowned My Queen in Love!</span>
+          <p className="text-xs text-red-600 font-bold tracking-wide flex items-center justify-center gap-1">
+            <span>APPLICATION APPROVED: {boyfriendName} is officially appointed as King of Her Heart!</span>
             <SunflowerIcon className="w-3.5 h-3.5" />
           </p>
         </div>
@@ -87,7 +91,7 @@ export const RoyalDecreeCertificate: React.FC<RoyalDecreeCertificateProps> = ({
 
         <div className="pt-2 text-xs text-red-800 flex items-center justify-center space-x-1 font-medium">
           <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-          <span>Email Alert Dispatched & Recorded in Royal Archives!</span>
+          <span>Official Appointment Signed, Sealed & Logged in Royal Archives!</span>
         </div>
       </div>
 

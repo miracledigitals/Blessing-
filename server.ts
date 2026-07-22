@@ -31,10 +31,10 @@ interface CreatorSettings {
 
 let storedSettings: CreatorSettings = {
   girlfriendName: "Blessing",
-  boyfriendName: "a King",
+  boyfriendName: "Miracle",
   recipientEmail: "mcmikeyofficial@gmail.com",
-  customProposalTitle: "Can I be your king?",
-  customProposalSubtitle: "And will you be my favourite person forever?",
+  customProposalTitle: "Application to Be Your King",
+  customProposalSubtitle: "Submitted with devotion & love to Queen Blessing 👑🌻",
   soundEnabled: true,
   photos: [
     {

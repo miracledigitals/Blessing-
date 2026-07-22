@@ -8,16 +8,15 @@ interface EvasiveButtonProps {
 }
 
 const EVASIVE_LABELS = [
-  "No 🥺",
-  "Are you sure? 💔",
-  "Think again! 🌸",
-  "Wrong button silly! 😉",
-  "Press the green one! 💕",
-  "I'll give you another chance! 👑",
-  "Nice try, speedy! 🏃‍♀️",
-  "Resistance is futile! 😘",
-  "My heart will break! 🥀",
-  "Try clicking YES instead! ✨",
+  "Reject Application ❌",
+  "Are you sure, Queen? 💔",
+  "Re-read Resume first! 📜",
+  "Applicant is 100% qualified! 👑",
+  "Approve is the right button! 💕",
+  "Candidate offers infinite hugs! 🤗",
+  "Can't reject this King! 🏃‍♀️",
+  "Application approval inevitable! 😘",
+  "Try clicking APPROVE instead! ✨",
 ];
 
 export const EvasiveButton: React.FC<EvasiveButtonProps> = ({ onAttemptClick, disabled }) => {

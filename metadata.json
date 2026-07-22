@@ -1,6 +1,6 @@
 {
-  "name": "Can I Be Your King - Romantic Proposal",
-  "description": "An interactive, cute sequence of questions culminating in 'Can I be your king?' proposal with celebratory heart animations and real-time email notifications.",
+  "name": "Can I Be Your King - Romantic Application",
+  "description": "An interactive digital application to be her King featuring candidate qualifications, screening evaluation, evasive button logic, photo gallery, and official Certificate of Royal Appointment.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
